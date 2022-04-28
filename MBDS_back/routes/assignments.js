@@ -1,4 +1,47 @@
 let Assignment = require('../model/assignment');
+let Matiere = require('../model/matiere')
+
+
+// Ajout assignment pour chaque eleve
+function postAssignmentsForEachStudent(req, res) {
+    Matiere
+    .findById(req.body.matiereRef)
+    .exec((err, matiere) => {
+        if(err){
+            res.send(err)
+        }
+        const matiereObj = new Matiere(matiere);
+        if(matiereObj.eleve.length == 0) {
+            res.send({errorEmptyStudent:"aucun élève pour ce matiere"})
+        } 
+        let assignment = null;
+        for(let i=0; i<matiereObj.eleve.length; i++) {
+            assignment = new Assignment(req.body);
+            assignment.eleveRef = matiereObj.eleve[i]
+            assignment.save( (err) => {
+                if(err){
+                    res.send('cant post assignment ', err);
+                }
+            })
+        } 
+        res.json({ message: `saved!`})      
+    })
+}
+
+// Recupérer tous les assignements avec ses references (eleveRef, matiereRef)
+function getAssignementsComplete(req, res) {
+    Assignment
+    .find()
+    .populate("eleveRef")
+    .populate("matiereRef", "-eleve")
+    .exec((err, assign) => {
+        if(err){
+            res.send(err)
+        }
+
+        res.send(assign);
+    })
+}
 
 // Récupérer tous les assignments (GET)
 function getAssignments(req, res){
@@ -70,4 +113,4 @@ function deleteAssignment(req, res) {
 
 
 
-module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment, getAssignementsComplete, postAssignmentsForEachStudent };

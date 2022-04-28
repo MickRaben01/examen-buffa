@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
+let matiere = require('./routes/matieres');
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -42,6 +43,16 @@ let port = process.env.PORT || 8010;
 
 // les routes
 const prefix = '/api';
+
+app.route(prefix + '/matieresComplete')
+  .get(matiere.getMatieresComplete);
+
+app.route(prefix + '/assignmentsEachStudent')
+  .post(assignment.postAssignmentsForEachStudent)
+  .put(assignment.updateAssignment);
+
+app.route(prefix + '/assignmentsComplete')
+  .get(assignment.getAssignementsComplete);
 
 app.route(prefix + '/assignments')
   .get(assignment.getAssignments);

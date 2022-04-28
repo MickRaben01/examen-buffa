@@ -14,14 +14,14 @@
             <mat-card class="card">
               <mat-card-title-group>
                 <mat-card-subtitle>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
-                <mat-card-title class="card-title">{{assignment.matiere}}</mat-card-title>
+                <mat-card-title class="card-title">{{assignment.titre}}</mat-card-title>
                 <img class="card-prof" width="50" height="50" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
               </mat-card-title-group>
               <mat-card-content>
                 <p style="margin: 0 150px;">
-                  <img style="border-radius: 8px;"  width="100" height="100" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+                  <img style="border-radius: 8px;"  width="100" height="100" src="../../assets/oracle-logo.png" >
                 </p>
-                <p>{{assignment.auteur}}</p>
+                <p>{{assignment.eleveRef.nom}}</p>
               </mat-card-content>
               <mat-divider inset></mat-divider>
               <mat-card-actions>
@@ -39,14 +39,14 @@
             <mat-card class="card">
               <mat-card-title-group>
                 <mat-card-subtitle>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
-                <mat-card-title class="card-title">{{assignment.matiere}}</mat-card-title>
+                <mat-card-title class="card-title">{{assignment.titre}}</mat-card-title>
                 <img class="card-prof" width="50" height="50" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
               </mat-card-title-group>
               <mat-card-content>
                 <p style="margin: 0 150px;">
                   <img style="border-radius: 8px;"  width="100" height="100" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
                 </p>
-                <p>{{assignment.auteur}}</p>
+                <p>{{assignment.eleveRef.nom}}</p>
               </mat-card-content>
               <mat-divider inset></mat-divider>
               <mat-card-actions>
