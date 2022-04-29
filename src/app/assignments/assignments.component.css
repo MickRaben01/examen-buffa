@@ -1,0 +1,46 @@
+.card-title {
+  max-width: 60%;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 18px;
+  width: 100%;
+  margin: 25px 0;
+}
+
+.card-prof {
+  border-radius: 50%;
+}
+
+.card {
+  margin-bottom: 18px;
+  margin-right: 18px;
+  min-width:380px;
+}
+
+.rendu {
+  color:green;
+}
+
+.nonRendu {
+  color:red;
+  background-color: yellow;
+  border: 2px dashed orange;
+}
+
+.container {
+  display:flex;
+  flex-direction: column;
+}
+
+.ajouterBtn {
+  align-self: flex-end;
+}
+
+.mat-card-title.card-title{
+  width: 300px;
+}
