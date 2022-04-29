@@ -1,3 +1,10 @@
+.marginForm p {
+  margin: 0;
+}
+.note {
+  display: flex;
+}
+
 #bottom {
   display:flex;
   justify-content: space-between;

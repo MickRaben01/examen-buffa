@@ -119,6 +119,22 @@ export class AssignmentsService {
     return this.http.post(this.url + '/assignmentsEachStudent', body, {'headers':headers})
   }
 
+  public noterAssignment(assignment: Assignment) {
+    const headers = {'content-type':'application/json'}
+    const body = JSON.stringify(assignment)
+    return this.http.put(this.url + '/noteAssignment', body, {'headers':headers})
+  }
+
+  public editAssignment(assignment: Assignment) {
+    const headers = {'content-type':'application/json'}
+    const body = JSON.stringify(assignment)
+    return this.http.put(this.url + '/editAssignment', body, {'headers':headers})
+  }
+
+  public deleteAssignment(idAssignment: string) {
+    return this.http.delete(this.url + '/deleteAssignment/'+idAssignment)
+  }
+
 
   /*getAssignments():Observable<Assignment[]> {
     // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,

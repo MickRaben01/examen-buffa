@@ -14,6 +14,9 @@ import { Matiere } from 'src/app/matieres/matiere.model';
 })
 export class AddAssignmentComponent implements OnInit {
   matieres: Matiere[] = [];
+  prof: string = "";
+  error: string = "";
+  assignments!: Assignment;
   firstFormGroup: FormGroup = new FormGroup({
     matiere: new FormControl('', Validators.required),
     prof: new FormControl({value:'',disabled: true})
@@ -36,11 +39,21 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   onSelectMatiere(matiereEvent: any) {
-    
+    this.prof = matiereEvent.value.prof.nom
   }
 
   valider() {
-    console.log(this.firstFormGroup.value.matiere)
+    this.assignments = new Assignment();
+    this.assignments.dateDeRendu = this.secondFormGroup.value.dtRendu ? this.secondFormGroup.value.dtRendu : "";
+    this.assignments.matiereRef = this.firstFormGroup.value.matiere._id;
+    this.assignments.titre = this.secondFormGroup.value.titre
+    this.assignmentsService.postAssignment(this.assignments).subscribe((res:any) => {
+      if(res.errorEmpty) {
+        this.error = res.errorEmpty
+      } else {
+        this.router.navigate(['/'])
+      }
+    })
   }
 
   onSubmit() {

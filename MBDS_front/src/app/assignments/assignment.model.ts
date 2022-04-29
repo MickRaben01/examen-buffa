@@ -7,7 +7,7 @@ export class Assignment {
   matiereRef!:Matiere;
   titre!:string;
   remarques!: string;
-  notes!: number;
+  note!: number;
   dateDeRendu!:Date;
   rendu!:boolean;
 }

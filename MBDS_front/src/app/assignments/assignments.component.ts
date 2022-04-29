@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssignmentsService } from '../shared/assignments.service';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { Assignment } from './assignment.model';
@@ -11,12 +11,17 @@ import { Assignment } from './assignment.model';
 })
 export class AssignmentsComponent implements OnInit {
   assignments: Assignment[] = [];
-
+  dialogAssignment!: MatDialogRef <AssignmentDetailComponent>
   constructor(private assignmentsService:AssignmentsService, private dialog: MatDialog) {}
 
   openDetailsDialog(assign: Assignment) {
-    const dialogRef = this.dialog.open(AssignmentDetailComponent, {
+    this.dialogAssignment = this.dialog.open(AssignmentDetailComponent, {
       data: assign
+    })
+    this.dialogAssignment.afterClosed().subscribe(result => {
+      this.assignmentsService.getAssignmentsComplete().subscribe((assignments: any) => {
+        this.assignments = assignments;
+      })
     })
   }
 

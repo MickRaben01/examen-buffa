@@ -6,14 +6,8 @@
         <mat-form-field appearance="standard">
           <mat-label>Selectionner Matière</mat-label>
           <mat-select (selectionChange)="onSelectMatiere($event)" formControlName="matiere" name="matiere">
-            <mat-option value="BDD">
-              BDD
-            </mat-option>
-            <mat-option value="Technologies Web">
-              Technologies Web
-            </mat-option>
-            <mat-option value="Grails">
-              Grails
+            <mat-option *ngFor="let m of matieres" [value]="m">
+              {{m.nom}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -21,7 +15,7 @@
       <p>
         <mat-form-field appearance="standard" disabled>
           <mat-label>Prof</mat-label>
-          <input type="text" matInput formControlName="prof">
+          <input type="text" [value] = "prof" matInput formControlName="prof">
         </mat-form-field>
       </p>
       <div>
@@ -55,8 +49,9 @@
     <p>Valider votre Assignment</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button color="warn" (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
       <button mat-button color="primary" (click)="valider()">Valider</button>
+      <p style="color:tomato">{{error}}</p>
     </div>
   </mat-step>
 </mat-stepper>
