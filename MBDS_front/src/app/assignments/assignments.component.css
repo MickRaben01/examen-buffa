@@ -40,3 +40,7 @@
 .ajouterBtn {
   align-self: flex-end;
 }
+
+.mat-card-title.card-title{
+  width: 300px;
+}
