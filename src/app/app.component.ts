@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './shared/auth.service';
+import { AssignmentsService } from './shared/assignments.service';
+
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,8 @@ import { AuthService } from './shared/auth.service';
 export class AppComponent {
   titre = 'Application de gestion des assignments...';
 
-  constructor(private authService:AuthService, private router:Router) {
+  constructor(private authService:AuthService, private router:Router, private assignmentsService: AssignmentsService) {
+    
   }
 
   onLoginLogout() {
@@ -27,5 +30,16 @@ export class AppComponent {
 
   isLogged() {
     return this.authService.loggedIn;
+  }
+  genererDonneesDeTest(){
+    this.assignmentsService.peuplerBDAvecForkJoin().subscribe(() => {
+      console.log(
+        'TOUS LES AJOUTS ONT ETE FAITS, ON PEUT RE-AFFICHER LA LISTE'
+      );
+      // replaceUrl = true = force le refresh, même si
+      // on est déjà sur la page d’accueil
+      // Marche plus avec la dernière version d’angular
+      this.router.navigate(['/home'], { replaceUrl: true });
+    });
   }
 }

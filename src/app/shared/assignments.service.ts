@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin,Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { LoggingService } from './logging.service';
 import { HttpClient } from '@angular/common/http';
+import { bdInitialAssignments } from './data';
+
 
 @Injectable({
   providedIn: 'root'
@@ -134,7 +136,50 @@ export class AssignmentsService {
   public deleteAssignment(idAssignment: string) {
     return this.http.delete(this.url + '/deleteAssignment/'+idAssignment)
   }
+  addAssignment(assignment:Assignment):Observable<any> {
+    // this.assignments.push(assignment);
+ 
+     this.loggingService.log(assignment.titre, "ajouté");
+ 
+     return this.http.post<Assignment>(this.url+ '/', assignment);
+ 
+     //return of("Assignment ajouté");
+   }
+   peuplerBD() {
+    bdInitialAssignments.forEach(a => {
+      //let newAssignment = new Assignment();
+      const newAssignment:any = new Assignment();
+      newAssignment.eleveRef = +a.eleveRef;
+      newAssignment.matiereRef = a.matiereRef;
+      newAssignment.titre = a.titre;
+      newAssignment.remarques = a.remarques;
+      newAssignment.note = a.note;
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.rendu = a.rendu;
+      this.addAssignment(newAssignment)
+      .subscribe(reponse => {
+        console.log(reponse.message);
+      })
+    })
+  }
+  peuplerBDAvecForkJoin(): Observable<any> {
+    const appelsVersAddAssignment:any = [];
 
+    bdInitialAssignments.forEach((a) => {
+      const nouvelAssignment:any = new Assignment();
+
+      nouvelAssignment.eleveRef = a.eleveRef;
+      nouvelAssignment.matiereRef = a.matiereRef;
+      nouvelAssignment.titre = a.titre;
+      nouvelAssignment.remarques = a.remarques;
+      nouvelAssignment.note = a.note;
+      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      nouvelAssignment.rendu = a.rendu;
+
+      appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
+    });
+    return forkJoin(appelsVersAddAssignment); // renvoie un seul Observable pour dire que c'est fini
+  }
 
   /*getAssignments():Observable<Assignment[]> {
     // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
