@@ -13,7 +13,8 @@ import { bdInitialAssignments } from './data';
 export class AssignmentsService {
   private localProtocol = "http"
   private localPort = ":8010"
-  private url = (document.domain.startsWith("localhost") ? this.localProtocol : "https")+"://"+ document.domain + (document.domain.startsWith("localhost") ? this.localPort : "")+"/api"
+  //private url = (document.domain.startsWith("localhost") ? this.localProtocol : "https")+"://"+ document.domain + (document.domain.startsWith("localhost") ? this.localPort : "")+"/api"
+  private url = "https://tpmbdsmadagascarapi.herokuapp.com/api/assignments";
   /*assignments:Assignment[] = [
     {
       id:1,
